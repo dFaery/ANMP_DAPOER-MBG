@@ -7,6 +7,10 @@ android {
     namespace = "com.example.dapoer_mbg"
     compileSdk = 36
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.dapoer_mbg"
         minSdk = 24

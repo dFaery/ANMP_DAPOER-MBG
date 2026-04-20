@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.dapoer_mbg.R
+import com.example.dapoer_mbg.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +21,20 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        binding.txtLogin.setOnClickListener {
+
+            val username = binding.txtUsername.text.toString()
+            val password = binding.txtPassword.text.toString()
+
+            if (username == "student" && password == "123") {
+                findNavController().navigate(R.id.actionDashboardFragment)
+            } else {
+                Toast.makeText(requireContext(), "Username / Password salah", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return binding.root
     }
 }

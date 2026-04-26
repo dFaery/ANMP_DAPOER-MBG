@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dapoer_mbg.R
 import com.example.dapoer_mbg.databinding.FragmentDashboardBinding
 import com.example.dapoer_mbg.viewmodel.HabitViewModel
+import androidx.navigation.findNavController
 
 class DashboardFragment : Fragment() {
 
@@ -39,6 +41,10 @@ class DashboardFragment : Fragment() {
         binding.recViewHabit.layoutManager = LinearLayoutManager(context)
         binding.recViewHabit.adapter = habitListAdapter
 
+        binding.fabAddHabit.setOnClickListener {
+            val action = DashboardFragmentDirections.actionCreateHabitFragment()
+            it.findNavController().navigate(action)
+        }
         observeViewModel()
     }
 

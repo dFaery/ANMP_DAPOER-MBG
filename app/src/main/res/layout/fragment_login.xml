@@ -27,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Habit Tracker"
-                android:textSize="48sp" />
+                android:textSize="42sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView4"

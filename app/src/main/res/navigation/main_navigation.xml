@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.dapoer_mbg.view.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/actionDashboardFragment"
             app:destination="@id/dashboardFragment" />
@@ -18,5 +17,14 @@
         android:id="@+id/dashboardFragment"
         android:name="com.example.dapoer_mbg.view.DashboardFragment"
         android:label="fragment_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/actionCreateHabitFragment"
+            app:destination="@id/createHabitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createHabitFragment"
+        android:name="com.example.dapoer_mbg.view.CreateHabitFragment"
+        android:label="Create New Habit"
+        tools:layout="@layout/fragment_create_habit" />
 </navigation>

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.dapoer_mbg.R
 import com.example.dapoer_mbg.databinding.FragmentCreateHabitBinding
 import com.example.dapoer_mbg.viewmodel.HabitViewModel
@@ -53,6 +54,7 @@ class CreateHabitFragment : Fragment() {
 
             habitViewModel.createNewHabit(name, description, goal, progress, iconName,unit)
             Toast.makeText(requireContext(), "Success add New habit!", Toast.LENGTH_SHORT).show()
+            findNavController().navigateUp()
         }
     }
 

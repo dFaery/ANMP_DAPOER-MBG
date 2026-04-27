@@ -44,6 +44,7 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
             if (habit.progress < habit.goal) {
                 habit.progress += 1
                 habitsLD.value = ArrayList(it)
+                fileHelper.saveHabitsList(it)
             }
         }
     }
@@ -55,6 +56,7 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
             if (habit.progress > 0) {
                 habit.progress -= 1
                 habitsLD.value = ArrayList(it)
+                fileHelper.saveHabitsList(it)
             }
         }
     }

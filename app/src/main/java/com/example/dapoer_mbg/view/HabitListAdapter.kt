@@ -1,7 +1,9 @@
 package com.example.dapoer_mbg.view
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dapoer_mbg.R
 import com.example.dapoer_mbg.databinding.HabitItemCardBinding
@@ -34,8 +36,21 @@ class HabitListAdapter(val habitList: ArrayList<Habit>, val onPlusClick: (Int) -
 
         if (habit.progress >= habit.goal) {
             holder.binding.txtStatus.text = "Completed"
+            holder.binding.cardHabit.strokeColor =
+                ContextCompat.getColor(holder.itemView.context, android.R.color.holo_green_dark)
+           holder.binding.txtStatus.setBackgroundResource(R.drawable.bg_completed)
+            holder.binding.txtStatus.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, android.R.color.white))
+           holder.binding.progressBarHabit.progressTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.context, android.R.color.holo_green_dark))
         } else {
             holder.binding.txtStatus.text = "In Progress"
+            holder.binding.cardHabit.strokeColor =
+                ContextCompat.getColor(holder.itemView.context, android.R.color.transparent)
+            holder.binding.txtStatus.setBackgroundResource(0)
+            holder.binding.txtStatus.setTextColor(
+                ContextCompat.getColor(holder.itemView.context, android.R.color.black))
+            holder.binding.progressBarHabit.progressTintList = null
         }
 
         val iconRes = when (habit.iconName) {

@@ -36,7 +36,8 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(HabitViewModel::class.java)
-        viewModel.refresh()
+
+        //viewModel.refresh()
 
         binding.recViewHabit.layoutManager = LinearLayoutManager(context)
         binding.recViewHabit.adapter = habitListAdapter
@@ -46,6 +47,11 @@ class DashboardFragment : Fragment() {
             it.findNavController().navigate(action)
         }
         observeViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refresh()
     }
 
     fun observeViewModel() {

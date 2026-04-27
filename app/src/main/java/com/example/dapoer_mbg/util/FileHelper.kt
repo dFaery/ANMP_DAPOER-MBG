@@ -104,4 +104,18 @@ class FileHelper(var context: Context) {
             return lastId;
         }
     }
+
+    fun saveHabitsList(habitList: List<Habit>) {
+        try {
+            val file = getFile()
+            file.bufferedWriter().use { writer ->
+                for (habit in habitList) {
+                    writer.write("${habit.id}|${habit.name}|${habit.description}|${habit.goal}|${habit.progress}|${habit.iconName}|${habit.unit}")
+                    writer.newLine()
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 }

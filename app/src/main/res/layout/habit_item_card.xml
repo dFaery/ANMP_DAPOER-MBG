@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="habit"
+            type="com.example.dapoer_mbg.model.Habit" />
 
+        <variable
+            name="listener"
+            type="com.example.dapoer_mbg.view.HabitListListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="8dp"
-                    android:text="Drink Water"
+                    android:text="@{habit.name}"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@id/imgHabitIcon"
@@ -67,7 +73,7 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="8dp"
-                    android:text="Stay hydrated throughout the day"
+                    android:text="@{habit.description}"
                     app:layout_constraintTop_toBottomOf="@id/txtHabitName"
                     app:layout_constraintStart_toEndOf="@id/imgHabitIcon"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -85,7 +91,7 @@
                     android:id="@+id/txtProgressValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3 / 8 glasses"
+                    android:text='@{habit.progress + " / " + habit.goal + " " + habit.unit}'
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="@id/txtProgressLabel"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -96,8 +102,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:max="8"
-                    android:progress="3"
+                    android:max="@{habit.goal}"
+                    android:progress="@{habit.progress}"
                     app:layout_constraintTop_toBottomOf="@id/txtProgressLabel"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -108,6 +114,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:text="-"
+                    android:onClick="@{(v)->listener.onMinusClick(v, habit)}"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -126,6 +133,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:text="+"
+                    android:onClick="@{(v)->listener.onPlusClick(v, habit)}"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:gravity="center"

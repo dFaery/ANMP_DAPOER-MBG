@@ -35,8 +35,7 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(HabitViewModel::class.java)
-
+        viewModel = ViewModelProvider(this)[HabitViewModel::class.java]
         //viewModel.refresh()
 
         binding.recViewHabit.layoutManager = LinearLayoutManager(context)
@@ -55,17 +54,18 @@ class DashboardFragment : Fragment() {
     }
 
     fun observeViewModel() {
-        viewModel.habitsLD.observe(viewLifecycleOwner, Observer {
+        viewModel.habitsLD.observe(viewLifecycleOwner) {
             habitListAdapter.updateHabitList(it)
-        })
 
-        viewModel.habitLoadErrorLD.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
+            if (it.isEmpty()) {
+                binding.recViewHabit.visibility = View.GONE
                 binding.txtError.visibility = View.VISIBLE
+                binding.txtError.text = "No habits yet"
             } else {
+                binding.recViewHabit.visibility = View.VISIBLE
                 binding.txtError.visibility = View.GONE
             }
-        })
+        }
 
         viewModel.loadingLD.observe(viewLifecycleOwner, Observer {
             if (it == true) {

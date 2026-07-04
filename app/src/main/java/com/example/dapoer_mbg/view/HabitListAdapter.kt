@@ -2,6 +2,7 @@ package com.example.dapoer_mbg.view
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.example.dapoer_mbg.databinding.HabitItemCardBinding
 import com.example.dapoer_mbg.model.Habit
 
 class HabitListAdapter(val habitList: ArrayList<Habit>, val onPlusClick: (Int) -> Unit, val onMinusClick: (Int) -> Unit)
-    : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>() {
+    : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>(), HabitListListener {
 
     class HabitViewHolder(var binding: HabitItemCardBinding)
         : RecyclerView.ViewHolder(binding.root)
@@ -26,13 +27,8 @@ class HabitListAdapter(val habitList: ArrayList<Habit>, val onPlusClick: (Int) -
 
     override fun onBindViewHolder(holder: HabitViewHolder, position: Int) {
         val habit = habitList[position]
-
-        holder.binding.txtHabitName.text = habit.name
-        holder.binding.txtHabitDesc.text = habit.description
-        holder.binding.txtProgressValue.text = "${habit.progress} / ${habit.goal} ${habit.unit}"
-
-        holder.binding.progressBarHabit.max = habit.goal
-        holder.binding.progressBarHabit.progress = habit.progress
+        holder.binding.habit = habit
+        holder.binding.listener = this
 
         if (habit.progress >= habit.goal) {
             holder.binding.txtStatus.text = "Completed"
@@ -66,15 +62,6 @@ class HabitListAdapter(val habitList: ArrayList<Habit>, val onPlusClick: (Int) -
         }
 
         holder.binding.imgHabitIcon.setImageResource(iconRes)
-
-
-        holder.binding.btnPlus.setOnClickListener {
-            onPlusClick(position)
-        }
-
-        holder.binding.btnMinus.setOnClickListener {
-            onMinusClick(position)
-        }
     }
 
     override fun getItemCount(): Int {
@@ -85,5 +72,19 @@ class HabitListAdapter(val habitList: ArrayList<Habit>, val onPlusClick: (Int) -
         habitList.clear()
         habitList.addAll(newHabitList)
         notifyDataSetChanged()
+    }
+
+    override fun onPlusClick(v: View, habit: Habit) {
+        val position = habitList.indexOf(habit)
+        if (position != -1) {
+            onPlusClick(position)
+        }
+    }
+
+    override fun onMinusClick(v: View, habit: Habit) {
+        val position = habitList.indexOf(habit)
+        if (position != -1) {
+            onMinusClick(position)
+        }
     }
 }

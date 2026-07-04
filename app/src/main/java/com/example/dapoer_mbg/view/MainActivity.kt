@@ -28,9 +28,11 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.createHabitFragment) {
+            if (
+                destination.id == R.id.createHabitFragment ||
+                destination.id == R.id.editHabitFragment
+            ) {
                 supportActionBar?.show()
-
             } else {
                 supportActionBar?.hide()
             }

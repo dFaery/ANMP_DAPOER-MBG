@@ -96,6 +96,27 @@ class HabitViewModel(application: Application) : AndroidViewModel(application), 
         }
     }
 
+    fun getHabitById(id: Int): Habit? {
+        val db = UserDatabase(getApplication())
+        return db.habitDao().getHabitById(id)
+    }
+
+    fun updateHabit(habit: Habit) {
+        launch {
+            val db = UserDatabase(getApplication())
+            db.habitDao().updateHabit(habit)
+            refresh()
+        }
+    }
+
+    fun createNewHabit(habit: Habit) {
+        launch {
+            val db = UserDatabase(getApplication())
+            db.habitDao().insertHabit(habit)
+            refresh()
+        }
+    }
+
 
 
 

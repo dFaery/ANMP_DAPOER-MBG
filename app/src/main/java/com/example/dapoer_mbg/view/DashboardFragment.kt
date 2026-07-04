@@ -7,21 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dapoer_mbg.R
 import com.example.dapoer_mbg.databinding.FragmentDashboardBinding
 import com.example.dapoer_mbg.viewmodel.HabitViewModel
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 
 class DashboardFragment : Fragment() {
 
     private lateinit var viewModel: HabitViewModel
-    private val habitListAdapter = HabitListAdapter(
-        arrayListOf(),
-        { position -> viewModel.increaseProgress(position) },
-        { position -> viewModel.decreaseProgress(position) }
-    )
+    private lateinit var habitListAdapter: HabitListAdapter
     private lateinit var binding: FragmentDashboardBinding
 
     override fun onCreateView(
@@ -36,14 +31,26 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this)[HabitViewModel::class.java]
+
+        habitListAdapter = HabitListAdapter(
+            arrayListOf(),
+            { position -> viewModel.increaseProgress(position) },
+            { position -> viewModel.decreaseProgress(position) },
+            { habit ->
+                val action =
+                    DashboardFragmentDirections.actionEditHabitFragment(habit.id)
+                findNavController().navigate(action)
+            }
+        )
+
         //viewModel.refresh()
 
         binding.recViewHabit.layoutManager = LinearLayoutManager(context)
         binding.recViewHabit.adapter = habitListAdapter
 
         binding.fabAddHabit.setOnClickListener {
-            val action = DashboardFragmentDirections.actionCreateHabitFragment()
-            it.findNavController().navigate(action)
+            val action = DashboardFragmentDirections.actionCreateHabitFragment(-1)
+            findNavController().navigate(action)
         }
         observeViewModel()
     }

@@ -10,7 +10,11 @@ import com.example.dapoer_mbg.R
 import com.example.dapoer_mbg.databinding.HabitItemCardBinding
 import com.example.dapoer_mbg.model.Habit
 
-class HabitListAdapter(val habitList: ArrayList<Habit>, val onPlusClick: (Int) -> Unit, val onMinusClick: (Int) -> Unit)
+class HabitListAdapter(
+    val habitList: ArrayList<Habit>,
+    val onPlusClick: (Int) -> Unit,
+    val onMinusClick: (Int) -> Unit,
+    val onHabitClick: (Habit) -> Unit)
     : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>(), HabitListListener {
 
     class HabitViewHolder(var binding: HabitItemCardBinding)
@@ -29,6 +33,9 @@ class HabitListAdapter(val habitList: ArrayList<Habit>, val onPlusClick: (Int) -
         val habit = habitList[position]
         holder.binding.habit = habit
         holder.binding.listener = this
+        holder.binding.txtHabitName.setOnClickListener {
+            onHabitClick(habit)
+        }
 
         if (habit.progress >= habit.goal) {
             holder.binding.txtStatus.text = "Completed"
